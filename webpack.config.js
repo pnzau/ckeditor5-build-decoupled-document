@@ -21,7 +21,7 @@ module.exports = {
 
 	output: {
 		// The name under which the editor will be exported.
-		library: 'DecoupledEditor',
+		library: 'CKEDITOR',
 
 		path: path.resolve( __dirname, 'build' ),
 		filename: 'ckeditor.js',
@@ -76,11 +76,13 @@ module.exports = {
 						loader: 'postcss-loader',
 						options: styles.getPostCssConfig( {
 							themeImporter: {
-								themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+								themePath: require.resolve(
+									'@ckeditor/ckeditor5-theme-lark'
+								)
 							},
 							minify: true
 						} )
-					},
+					}
 				]
 			}
 		]

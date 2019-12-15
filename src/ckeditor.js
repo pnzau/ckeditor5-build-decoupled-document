@@ -5,6 +5,7 @@
 
 // The editor creator to use.
 import DecoupledEditorBase from '@ckeditor/ckeditor5-editor-decoupled/src/decouplededitor';
+import InlineEditorBase from '@ckeditor/ckeditor5-editor-inline/src/inlineeditor';
 
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
@@ -36,10 +37,10 @@ import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefrom
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 
-export default class DecoupledEditor extends DecoupledEditorBase {}
+class DecoupledEditor extends DecoupledEditorBase {}
+class InlineEditor extends InlineEditorBase {}
 
-// Plugins to include in the build.
-DecoupledEditor.builtinPlugins = [
+const plugins = [
 	Essentials,
 	Alignment,
 	FontSize,
@@ -71,8 +72,11 @@ DecoupledEditor.builtinPlugins = [
 	TableToolbar
 ];
 
-// Editor configuration.
-DecoupledEditor.defaultConfig = {
+// Plugins to include in the build.
+DecoupledEditor.builtinPlugins = plugins;
+InlineEditor.builtinPlugins = plugins;
+
+const documentConfig = {
 	toolbar: {
 		items: [
 			'heading',
@@ -105,11 +109,7 @@ DecoupledEditor.defaultConfig = {
 		]
 	},
 	image: {
-		styles: [
-			'full',
-			'alignLeft',
-			'alignRight'
-		],
+		styles: [ 'full', 'alignLeft', 'alignRight' ],
 		toolbar: [
 			'imageStyle:alignLeft',
 			'imageStyle:full',
@@ -119,12 +119,54 @@ DecoupledEditor.defaultConfig = {
 		]
 	},
 	table: {
-		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells'
-		]
+		contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'en'
+};
+
+const inlineConfig = {
+	toolbar: {
+		items: [
+			'heading',
+			'|',
+			'bold',
+			'italic',
+			'underline',
+			'strikethrough',
+			'highlight',
+			'|',
+			'numberedList',
+			'bulletedList',
+			'|',
+			'link',
+			'|',
+			'undo',
+			'redo'
+		]
+	},
+	image: {
+		styles: [ 'full', 'alignLeft', 'alignRight' ],
+		toolbar: [
+			'imageStyle:alignLeft',
+			'imageStyle:full',
+			'imageStyle:alignRight',
+			'|',
+			'imageTextAlternative'
+		]
+	},
+	table: {
+		contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+	},
+	// This value must be kept in sync with the language defined in webpack.config.js.
+	language: 'en'
+};
+
+// Editor configuration.
+DecoupledEditor.defaultConfig = documentConfig;
+InlineEditor.defaultConfig = inlineConfig;
+
+export default {
+	DecoupledEditor,
+	InlineEditor
 };
